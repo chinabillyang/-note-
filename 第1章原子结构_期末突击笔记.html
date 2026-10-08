@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第1章 原子结构 - 期末突击笔记</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        h2 {
+            color: #667eea;
+            margin: 30px 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            font-size: 1.8em;
+        }
+
+        h3 {
+            color: #764ba2;
+            margin: 20px 0 10px 0;
+            font-size: 1.4em;
+        }
+
+        .tip-box {
+            background: #f8f9ff;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 2px 10px rgba(102, 126, 234, 0.1);
+        }
+
+        .tip-box strong {
+            color: #667eea;
+        }
+
+        .warning {
+            background: #fff5f5;
+            border-left: 5px solid #e53e3e;
+        }
+
+        .warning strong {
+            color: #e53e3e;
+        }
+
+        .success {
+            background: #f0fff4;
+            border-left: 5px solid #38a169;
+        }
+
+        .success strong {
+            color: #38a169;
+        }
+
+        .formula-box {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            overflow-x: auto;
+        }
+
+        .mnemonic {
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            color: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(246, 211, 101, 0.4);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9ff;
+        }
+
+        tr:hover {
+            background: #e9ecff;
+        }
+
+        .step-box {
+            background: white;
+            border: 2px solid #667eea;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 15px;
+            position: relative;
+        }
+
+        .step-box::before {
+            content: attr(data-step);
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        ul, ol {
+            padding-left: 30px;
+            margin: 15px 0;
+        }
+
+        li {
+            margin: 10px 0;
+        }
+
+        .highlight {
+            background: #fff9c4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+
+        .emoji {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        .exam-tip {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.1em;
+        }
+
+        .progress-section {
+            background: #f0f4ff;
+            padding: 30px;
+            text-align: center;
+            border-top: 3px solid #667eea;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            transition: transform 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 第1章 原子结构</h1>
+            <p>💊 药学专业 · 无机化学第八版 · 杨晓达主编</p>
+            <p style="margin-top: 10px; font-size: 1em;">🔥 期末突击版 · 让复杂概念变得简单易懂</p>
+        </div>
+
+        <div class="content">
+            <h2>🎯 你现在的痛点是什么？</h2>
+            <div class="tip-box">
+                <strong>📍 当前位置：</strong>第28页 → 第二节「多电子原子的结构」<br>
+                <strong>🔍 核心难点：</strong>能级分裂、能级交错、4s与3d到底谁能量高？<br>
+                <strong>💡 别担心！</strong>这个知识点其实有规律可循，看完这篇你就懂了！
+            </div>
+
+            <h2>🗺️ 先看全局：这一章在讲什么？</h2>
+            <table>
+                <tr>
+                    <th>章节</th>
+                    <th>主题</th>
+                    <th>和你的关系</th>
+                </tr>
+                <tr>
+                    <td>第一节</td>
+                    <td>氢原子（最简单）</td>
+                    <td>基础知识，简单理解</td>
+                </tr>
+                <tr>
+                    <td><strong>第二节</strong></td>
+                    <td><strong>多电子原子</strong></td>
+                    <td><strong>← 你在这里，重点！</strong></td>
+                </tr>
+                <tr>
+                    <td>第三节</td>
+                    <td>元素周期表</td>
+                    <td>排布与周期表的关系</td>
+                </tr>
+                <tr>
+                    <td>第四节</td>
+                    <td>元素性质周期性</td>
+                    <td>原子半径、电离能等</td>
+                </tr>
+            </table>
+
+            <h2>🔑 第28页核心：能级交错到底啥意思？</h2>
+            
+            <div class="mnemonic">
+                🔥 记住这句话：先填4s，但失电子先失4s！
+            </div>
+
+            <h3>📖 三个概念秒懂</h3>
+            <table>
+                <tr>
+                    <th>概念</th>
+                    <th>通俗解释</th>
+                    <th>类比</th>
+                </tr>
+                <tr>
+                    <td><strong>能层(n)</strong></td>
+                    <td>电子住的"楼层"</td>
+                    <td>1楼、2楼、3楼</td>
+                </tr>
+                <tr>
+                    <td><strong>能级(l)</strong></td>
+                    <td>楼层里的"房间类型"</td>
+                    <td>单人间(s)、标准间(p)、套房(d)</td>
+                </tr>
+                <tr>
+                    <td><strong>轨道(m)</strong></td>
+                    <td>房间的"朝向位置"</td>
+                    <td>朝东、朝西、朝南...</td>
+                </tr>
+            </table>
+
+            <h3>⚡ 能级分裂（同楼层内）</h3>
+            <div class="tip-box">
+                <strong>规律：</strong>同一楼层内，s < p < d < f<br>
+                <strong>原因：</strong>s电子"钻"得近，离核近→能量低；f电子"钻"得远→能量高<br>
+                <strong>记忆：</strong>房间等级越高，能量越高
+            </div>
+
+            <h3>🔀 能级交错（不同楼层）← 考试必考！</h3>
+            <div class="warning">
+                <strong>现象：</strong>4s轨道竟然比3d轨道能量低！所以电子先住4s，再住3d<br>
+                <strong>原因：</strong>4s电子"钻穿能力"超强，能钻到离核很近的地方，受核吸引强→能量低
+            </div>
+
+            <div class="formula-box">
+                🎯 能级顺序（必须默写）：<br>
+                1s → 2s → 2p → 3s → 3p → <strong>4s</strong> → <strong>3d</strong> → 4p → 5s → 4d → 5p → 6s → 4f → 5d → 6p → 7s → 5f → 6d → 7p
+            </div>
+
+            <div class="mnemonic">
+                📝 口诀：n加0.7l，越大能量越高<br>
+                4s: 4+0.7×0=4.0 | 3d: 3+0.7×2=4.4 → 所以4s先填！
+            </div>
+
+            <h2>🧮 Slater规则（计算题必考）</h2>
+            
+            <h3>📝 计算步骤</h3>
+            <div class="step-box" data-step="Step 1">
+                <strong>分组：</strong>(1s) (2s,2p) (3s,3p) (3d) (4s,4p) (4d) (4f)...
+            </div>
+
+            <div class="step-box" data-step="Step 2">
+                <strong>确定被屏蔽电子：</strong>你要算哪个电子的σ？
+            </div>
+
+            <div class="step-box" data-step="Step 3">
+                <strong>找屏蔽电子及权重：</strong><br>
+                • 同组其他电子：σ = 0.35（1s之间为0.30）<br>
+                • n-1层电子：ns,np的σ=0.85，nd的σ=1.00<br>
+                • n-2及更内层：全部σ=1.00
+            </div>
+
+            <div class="step-box" data-step="Step 4">
+                <strong>计算总σ和Z*：</strong><br>
+                σ = 各组屏蔽常数之和<br>
+                Z* = 原子序数 - σ
+            </div>
+
+            <h3>📖 例题：碳原子(Z=6)的2p电子</h3>
+            <div class="tip-box">
+                C: 1s² 2s² 2p²<br>
+                被屏蔽电子：2p²中的某个电子<br>
+                屏蔽电子：<br>
+                • 同组(2s,2p)其他：3个电子 × 0.35 = 1.05<br>
+                • n-1层(1s)：2个电子 × 0.85 = 1.70<br>
+                <strong>σ = 1.05 + 1.70 = 2.75</strong><br>
+                <strong>Z* = 6 - 2.75 = 3.25</strong>
+            </div>
+
+            <h2>🎨 四个量子数（必背！）</h2>
+            
+            <table>
+                <tr>
+                    <th>量子数</th>
+                    <th>符号</th>
+                    <th>取值</th>
+                    <th>决定什么</th>
+                    <th>类比</th>
+                </tr>
+                <tr>
+                    <td><strong>主量子数</strong></td>
+                    <td>n</td>
+                    <td>1,2,3,4...</td>
+                    <td>电子层、能量主要因素</td>
+                    <td>楼层号</td>
+                </tr>
+                <tr>
+                    <td><strong>角量子数</strong></td>
+                    <td>l</td>
+                    <td>0,1,2...n-1</td>
+                    <td>亚层形状(s,p,d,f)</td>
+                    <td>房间类型</td>
+                </tr>
+                <tr>
+                    <td><strong>磁量子数</strong></td>
+                    <td>m</td>
+                    <td>0,±1...±l</td>
+                    <td>轨道空间取向</td>
+                    <td>房间朝向</td>
+                </tr>
+                <tr>
+                    <td><strong>自旋磁量子数</strong></td>
+                    <td>ms</td>
+                    <td>+1/2, -1/2</td>
+                    <td>电子自旋方向</td>
+                    <td>顺/逆时针</td>
+                </tr>
+            </table>
+
+            <div class="exam-tip">
+                💡 <strong>推论：</strong>轨道总数 = n²，电子总数 = 2n²<br>
+                例如n=3：3²=9个轨道，最多18个电子
+            </div>
+
+            <h2>📋 电子排布三大规则</h2>
+            
+            <h3>1️⃣ 能量最低原理</h3>
+            <div class="tip-box">
+                电子优先占据能量低的轨道！<br>
+                顺序：1s → 2s → 2p → 3s → 3p → 4s → 3d → 4p → ...
+            </div>
+
+            <h3>2️⃣ Pauli不相容原理</h3>
+            <div class="tip-box">
+                一个轨道最多2个电子，且必须自旋相反<br>
+                所以每个轨道里最多是 <strong>↑↓</strong>
+            </div>
+
+            <h3>3️⃣ Hund规则（洪特规则）</h3>
+            <div class="tip-box">
+                简并轨道（如3个p轨道）中：<br>
+                • 电子先<strong>分别占据</strong>不同轨道<br>
+                • 且自旋方向<strong>平行</strong><br>
+                正确：↑ ↑ ↑ | 错误：↑↓ ↑
+            </div>
+
+            <h2>⚠️ 必须记住的特例</h2>
+            
+            <div class="warning">
+                <strong>半满/全满/全空 更稳定！</strong><br>
+                Cr(24): [Ar] <strong>3d⁵ 4s¹</strong> ❌不是3d⁴4s²<br>
+                Cu(29): [Ar] <strong>3d¹⁰ 4s¹</strong> ❌不是3d⁹4s²<br>
+                其他：Pd、Ag、Au、Pt等也是类似特例
+            </div>
+
+            <div class="mnemonic">
+                🎶 口诀：铬铜不守常，半满全满最舒畅！
+            </div>
+
+            <h2>🗺️ 元素周期表 = 电子排布的地图</h2>
+            
+            <h3>🔍 判断方法</h3>
+            <div class="step-box" data-step="Step 1">
+                写出价电子构型：nsˣ (n-1)dʸ 或 ns²npʸ
+            </div>
+
+            <div class="step-box" data-step="Step 2">
+                <strong>周期数</strong> = n（最高电子层数）
+            </div>
+
+            <div class="step-box" data-step="Step 3">
+                <strong>主族序数</strong> = ns + np 电子数<br>
+                <strong>副族序数</strong> = (n-1)d + ns 电子数
+            </div>
+
+            <h3>📖 例子：Fe (Z=26)</h3>
+            <div class="tip-box">
+                Fe: [Ar] <strong>3d⁶ 4s²</strong><br>
+                周期数 = 4（第4周期）<br>
+                副族序数 = 6+2 = 8（VIII族，特殊）<br>
+                但失去电子时：<strong>先失4s²，再失3d</strong>
+            </div>
+
+            <h2>🎯 复习打卡计划</h2>
+            
+            <h3>📅 今天完成</h3>
+            <ul>
+                <li>✅ 背熟四个量子数取值（5分钟）</li>
+                <li>✅ 默写能级顺序（5分钟）</li>
+                <li>✅ 练习2道Slater规则计算题（10分钟）</li>
+                <li>✅ 默写Cr和Cu的电子排布式（3分钟）</li>
+            </ul>
+
+            <h3>📅 明天完成</h3>
+            <ul>
+                <li>✅ 画元素周期表与电子排布关系图（10分钟）</li>
+                <li>✅ 做5道选择题（15分钟）</li>
+                <li>✅ 复习第四节元素性质周期性（20分钟）</li>
+            </ul>
+
+            <div class="exam-tip">
+                🏆 <strong>考试提醒：</strong><br>
+                • 四个量子数取值 → 高频选择题<br>
+                • Slater规则计算 → 计算题<br>
+                • 电子排布特例 → 判断题<br>
+                • 能级交错 → 理解题
+            </div>
+
+            <h2>❓ 最后自测</h2>
+            
+            <div class="tip-box">
+                <strong>问1：</strong>为什么4s轨道比3d轨道先填电子？<br>
+                <strong>答：</strong>因为4s电子钻穿能力强，钻到离核近处，受核吸引强，能量降低，所以E(4s) < E(3d)
+            </div>
+
+            <div class="tip-box">
+                <strong>问2：</strong>Fe³⁺的电子失去顺序是什么？<br>
+                <strong>答：</strong>先失4s²，再失3d¹，得到Fe³⁺: [Ar] 3d⁵
+            </div>
+
+            <div class="tip-box">
+                <strong>问3：</strong>Cr的电子排布式为什么是3d⁵4s¹？<br>
+                <strong>答：</strong>因为3d半满(3d⁵)加上4s半满(4s¹)，整体能量更低，更加稳定！
+            </div>
+
+        </div>
+
+        <div class="progress-section">
+            <h3>🚀 准备好挑战了吗？</h3>
+            <p>去做课后习题吧！第1章是基础，搞懂了后面的化学键、物质结构、酸碱平衡都会事半功倍。</p>
+            <button class="btn" onclick="alert('加油！你是最棒的！💪')">开启复习模式 🔥</button>
+        </div>
+    </div>
+</body>
+</html>
